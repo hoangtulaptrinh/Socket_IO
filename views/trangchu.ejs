@@ -6,9 +6,28 @@
     <script src="jquery.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script>
-      // gọi điện lên sever
+      //gọi điện lên sever
       const socket = io('http://localhost:8080');
-      //  gọi điện lên sever
+      //lắng nghe những gì mà sever trả về
+      socket.on('Sever-send-data', (data) => {
+        $('#content').append(data);
+      });
+      //gọi điện lên sever
+      $(document).ready(() => {
+        $('#mrA').click(() => {
+          //emit là sự kiện nói lên sever
+          //tham số thứ nhất là tên emit lên tham số thứ 2 là dữ liệu muốn truyền lên
+          socket.emit('Client-send-data', $('#input').val());
+        });
+      });
     </script>
+    <body>
+      <label>Chat gì đi</label>
+      <input id="input"></input>
+      <div id="mrA">
+        Click Send
+      </div>
+      <h2 id="content">Nội Dung Sever Trả Về Nè</h2>
+    </body>
   </head>
 </html>
